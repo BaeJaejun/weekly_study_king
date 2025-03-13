@@ -4,7 +4,8 @@
 *크래프톤 정글 week.0 미니 프로젝트
 
 
-<details><summary>pip install 목록/summary>
+<details><summary>pip install 목록</summary>
+  
 APScheduler==3.11.0
   
 beautifulsoup4==4.13.3
