@@ -1,0 +1,70 @@
+{% extends "Main.html" %} {% block title %}회원가입{% endblock %} {% block
+content %}
+<div class="box has-text-centered">
+  <form method="post" action="/register">
+    <div class="field">
+      <label class="label has-text-left">이름</label>
+      <div class="control">
+        <input
+          class="input"
+          type="text"
+          name="username"
+          placeholder="이름을 입력하세요"
+          required
+        />
+      </div>
+    </div>
+    <div class="field">
+      <label class="label has-text-left">ID</label>
+      <div class="control">
+        <input
+          class="input"
+          type="text"
+          name="userid"
+          id="userid"
+          placeholder="아이디를 입력하세요"
+          required
+        />
+      </div>
+      <!--  중복 결과 메시지 -->
+      <p id="id-check-result" class="help"></p>
+    </div>
+
+    <div class="field">
+      <label class="label has-text-left">PW</label>
+      <div class="control">
+        <input
+          class="input"
+          type="password"
+          name="password"
+          placeholder="비밀번호를 입력하세요"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label has-text-left">PW 재입력</label>
+      <div class="control">
+        <input
+          class="input"
+          type="password"
+          name="confirm_password"
+          placeholder="비밀번호를 다시 입력하세요"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- 회원가입 버튼만 -->
+    <div class="field mt-5">
+      <div class="control">
+        <button type="submit" class="button is-link is-fullwidth">
+          회원가입
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

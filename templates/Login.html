@@ -1,0 +1,43 @@
+{% extends "Main.html" %} {% block title %}로그인 창{% endblock %} {% block
+content %}
+<div class="box has-text-centered">
+  <form method="post" action="/login">
+    <div class="field">
+      <label class="label has-text-left">ID</label>
+      <div class="control">
+        <input
+          class="input"
+          type="text"
+          name="userid"
+          placeholder="아이디를 입력하세요"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label has-text-left">PW</label>
+      <div class="control">
+        <input
+          class="input"
+          type="password"
+          name="password"
+          placeholder="비밀번호를 입력하세요"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="columns mt-4">
+      <div class="column">
+        <a href="/register" class="button is-light is-fullwidth">회원가입</a>
+      </div>
+      <div class="column">
+        <button class="button is-link is-fullwidth" type="submit">
+          로그인
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

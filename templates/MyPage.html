@@ -1,0 +1,80 @@
+{% extends "Main.html" %} {% block title %}마이페이지{% endblock %} {% block
+content %}
+
+<!-- 오늘 공부 시간 안내 -->
+<div class="box has-text-centered">
+  <p class="is-size-4">
+    <strong>{{ username }}</strong>님의 오늘의 공부시간은
+    <strong id="today-time"
+      >{{ today_hours }}시간 {{ today_minutes }}분 {{ today_seconds_html
+      }}초</strong
+    >
+    입니다.
+  </p>
+</div>
+<!-- 서버에서 입실 시각을 Unix 타임스탬프로 전달 -->
+<div
+  id="enter-time"
+  data-timestamp="{{ enter_time_timestamp or '' }}"
+  style="display: none"
+></div>
+
+<!-- 주간 목표 & 진행률 -->
+<div class="box">
+  <p class="mb-3">이 주의 목표: <strong>{{ weekly_goal }}</strong> 시간</p>
+
+  <!-- 진행률 바 -->
+  <progress
+    class="progress is-success"
+    value="{{ progress_percent }}"
+    max="100"
+  >
+    {{ progress_percent }}%
+  </progress>
+
+  <div class="has-text-centered mt-2">
+    목표까지 <strong>{{ progress_percent }}%</strong> 달성하셨습니다!! 👊
+    <br />
+    이번 주<strong>⏰{{week_study_hour}} 시간 {{week_study_minute}}분</strong>
+    공부하셨습니다.
+  </div>
+</div>
+
+<!-- 목표 설정 & 순위 -->
+<div class="columns mt-4">
+  <div class="column">
+    <div class="box has-text-left">
+      현재 정글 <strong>{{ rank }}등</strong> 입니다
+    </div>
+  </div>
+  <div class="column has-text-right">
+    <a href="/goal" class="button is-link">이번 주 목표 설정</a>
+  </div>
+</div>
+
+<script>
+  const enterTimeElement = document.getElementById("enter-time");
+  const timestamp = enterTimeElement
+    ? enterTimeElement.dataset.timestamp
+    : null;
+  if (timestamp && parseInt(timestamp) > 0) {
+    //timestamp 값이 존재하는가 && 양의 정수인가
+    // timestamp는 초 단위이므로 밀리초로 변환
+    const enterTimestamp = parseInt(timestamp) * 1000;
+    function updateStudyTime() {
+      const now = Date.now();
+      const elapsed = now - enterTimestamp;
+      const hours = Math.floor(elapsed / (1000 * 60 * 60));
+      const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
+      document.getElementById(
+        "today-time"
+      ).textContent = `${hours}시간 ${minutes}분 ${seconds}초`;
+    }
+    //1초마다 updateStudyTime() 함수를 실행
+    setInterval(updateStudyTime, 1000);
+    //페이지 로딩 직후 바로 한 번 실행해서 표시값 초기화
+    updateStudyTime();
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "Main.html" %} {% block title %}목표 설정 창{% endblock %} {% block
+content %}
+<div class="box has-text-centered">
+  <p class="is-size-4 mb-4">이번 주의 목표📖를 설정해 주세요.</p>
+
+  <!-- 목표 입력 -->
+  <form method="post" action="/set_goal">
+    <div class="field is-grouped is-grouped-centered mb-5">
+      <div class="control">
+        <input
+          class="input is-medium"
+          type="number"
+          name="weekly_goal"
+          placeholder="목표 시간을 입력하세요"
+          required
+          min="1"
+        />
+      </div>
+      <div class="control is-flex is-align-items-center">
+        <span class="is-size-5 ml-2">시간</span>
+      </div>
+    </div>
+
+    <!-- 버튼 영역 -->
+    <div class="columns">
+      <div class="column">
+        <a href="/mypage" class="button is-fullwidth is-light">취소</a>
+      </div>
+      <div class="column">
+        <button class="button is-link is-fullwidth" type="submit">확인</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

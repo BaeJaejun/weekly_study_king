@@ -1,0 +1,103 @@
+{% extends "Main.html" %} {% block title %}홈 - 공부짱{% endblock %} {% block
+content %}
+
+<!-- 랭킹 영역 -->
+<div class="box">
+  <div class="columns is-mobile is-vcentered mb-3">
+    <div class="column has-text-left">
+      <b class="is-size-3">이 주의 공부짱들✍</b>
+    </div>
+    <div class="column has-text-right">
+      <span class="is-size-5">매 주 월요일 <strong>순위</strong>🏆 초기화</span>
+    </div>
+  </div>
+  <hr />
+
+  <div class="ranking-box content">
+    <ol>
+      {% if rankings %} {% for user in rankings %}
+      <div class="columns is-mobile is-vcentered is-gapless">
+        <div class="column is-narrow" style="width: 2em; text-align: center">
+          {% if loop.index == 1%} 🥇 {%elif loop.index == 2%} 🥈 {%elif
+          loop.index == 3%} 🥉 {%else%}　{%endif%}
+        </div>
+        <div class="column is-narrow">{{ loop.index }}위</div>
+        ㅤㅤㅤㅤㅤㅤ
+        <div class="column is-two-third has-text-weight-semibold">
+          {{ user.username }} {# 동일한 username을 가진 다른 사용자가 있는지 검사 #}
+          {% set dup = namespace(value=false) %}
+          {% for other in rankings %}
+            {% if other.username == user.username and other.userid != user.userid %}
+              {% set dup.value = true %}
+            {% endif %}
+          {% endfor %}
+          {% if dup.value %}
+            ({{ user.userid }})
+          {% endif %}
+        </div>
+        <div class="column">
+          {{ user.hours }}시간 {{ user.minutes }}분 {{ user.seconds }}초
+        </div>
+      </div>
+
+      {% endfor %} {% else %}
+      <p>데이터가 없습니다</p>
+      {% endif %}
+    </ol>
+  </div>
+</div>
+
+<!-- 입실 / 퇴실 버튼 -->
+<form method="post" action="/check_in_out">
+  <div class="columns mt-4">
+    <div class="column">
+      <button
+        class="button is-dark is-fullwidth"
+        type="submit"
+        name="action"
+        value="checkin"
+        {%
+        if
+        not
+        can_checkin
+        %}disabled{%
+        endif
+        %}
+      >
+        입실
+      </button>
+    </div>
+    <div class="column">
+      <button
+        class="button is-dark is-fullwidth"
+        type="submit"
+        name="action"
+        value="checkout"
+        {%
+        if
+        not
+        can_checkout
+        %}disabled{%
+        endif
+        %}
+      >
+        퇴실
+      </button>
+    </div>
+  </div>
+</form>
+<div class="columns is-mobile is-vcentered mt-3">
+  {% if not is_logged_in %}
+  <div class="column has-text-left">
+    <span class="has-text-info">입실 퇴실을 위해 로그인이 필요합니다.</span>
+  </div>
+  {% endif %}
+
+  <div class="column has-text-right">
+    <span class="has-text-danger"
+      >매일 자정, 입실시간이 초기화되니 <strong>자정 전에 퇴실</strong>🙏을 꼭
+      해주세요!</span
+    >
+  </div>
+</div>
+{% endblock %}
