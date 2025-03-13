@@ -5,7 +5,6 @@
 
 
 <details><summary>pip install 목록/summary>
-  
 APScheduler==3.11.0
   
 beautifulsoup4==4.13.3
@@ -60,4 +59,4 @@ Werkzeug==3.1.3
 
 WTForms==3.2.1
 
-</details>
+</details><output>
